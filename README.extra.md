@@ -405,3 +405,45 @@ avbroot sparse info -i <input sparse image>
 ```
 
 This subcommand shows the sparse image metadata, including the header and all chunks.
+
+## `avbroot zip`
+
+This set of commands is for working with raw OTA zip. They are intentionally placed outside of `avbroot ota` to make them less discoverable by accident. These commands are useful for creating OTA zip files without going through the normal `avbroot ota patch` mechanism.
+
+**WARNING**: Make sure to run `avbroot ota verify` on OTA files before installing them. These pack commands are low level operations that only check that the file structure of the OTA itself is valid, not the contents contained within.
+
+### Unpacking an OTA zip
+
+```bash
+avbroot ota unpack -i <input OTA>
+```
+
+This subcommand unpacks the OTA metadata information to `ota.toml` and the OTA files to the `ota_files` directory.
+
+### Packing an OTA zip
+
+```bash
+avbroot ota pack -o <output OTA> --key <OTA private key>
+```
+
+This subcommand packs a new OTA zip from the `ota.toml` file and `ota_files` directory. Any files in the `ota_files` directory that don't have a corresponding entry in `ota.toml` are silently ignored.
+
+When packing an OTA zip, the `metadata.property_files` field in `ota.toml` may potentially be recomputed. To write a TOML file containing the new values, use `--output-info <output TOML>`. It is safe to overwrite the existing `ota.toml` if desired.
+
+### Repacking an OTA zip
+
+```bash
+avbroot ota repack -i <input OTA> -o <output OTA> --key <OTA private key>
+```
+
+This subcommand is logically equivalent to `avbroot ota unpack` followed by `avbroot ota pack`, except more efficient.
+
+**WARNING**: This is generally not a useful command. Resigning the OTA zip without also resigning the payload binary inside results in an invalid OTA.
+
+### Showing OTA metadata information
+
+```bash
+avbroot ota info -i <input OTA>
+```
+
+This subcommand shows all of the OTA metadata fields.
