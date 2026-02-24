@@ -7,6 +7,10 @@
     to update the actual links at the bottom of the file.
 -->
 
+### Unreleased
+
+* Add support for Magisk 30700 ([PR #573])
+
 ### Version 3.26.0
 
 * Add new `--re-sign` option to `avbroot ota patch` for re-signing partitions that would otherwise be unmodified ([Issue #569], [PR #570])
@@ -694,3 +698,4 @@ Behind-the-scenes changes:
 [PR #565]: https://github.com/chenxiaolong/avbroot/pull/565
 [PR #570]: https://github.com/chenxiaolong/avbroot/pull/570
 [PR #571]: https://github.com/chenxiaolong/avbroot/pull/571
+[PR #573]: https://github.com/chenxiaolong/avbroot/pull/573
